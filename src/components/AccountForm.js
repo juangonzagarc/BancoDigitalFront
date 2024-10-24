@@ -18,13 +18,12 @@ function AccountForm() {
         const newAccount = {
             cedula,
             nombre,
-            balance: saldo  // Usa 'balance' en lugar de 'saldo' para que coincida con el DTO
+            balance: saldo
         };
 
         try {
             await createAccount(newAccount);
             alert('Cuenta creada con éxito');
-            // Resetea los campos del formulario
             setCedula('');
             setNombre('');
             setSaldo('');

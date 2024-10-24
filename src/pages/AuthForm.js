@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate
-import api from '../api'; // Asegúrate de que api.js está en la ruta correcta
+import { useNavigate } from 'react-router-dom';
+import api from '../api';
 
 function AuthForm() {
     const [cedula, setCedula] = useState('');
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [contraseña, setContraseña] = useState('');
-    const [isLogin, setIsLogin] = useState(true); // Alterna entre login y registro
+    const [isLogin, setIsLogin] = useState(true);
     const [error, setError] = useState('');
-    const navigate = useNavigate(); // Hook de React Router para redirección
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,21 +17,18 @@ function AuthForm() {
 
         try {
             if (isLogin) {
-                // Llamar al servicio de login
-                await api.login(cedula, contraseña); // Cambié el nombre a login, que ya tienes en api.js
+                await api.login(cedula, contraseña);
                 alert('Login exitoso');
-                navigate('/dashboard'); // Redirigir a la pantalla de dashboard
+                navigate('/dashboard');
             } else {
-                // Llamar al servicio de registro
-                await api.register({ cedula, nombre, apellido, contraseña }); // Cambié a register
+                await api.register({ cedula, nombre, apellido, contraseña });
                 alert('Registro exitoso');
-                setIsLogin(true); // Cambiar a la pantalla de login tras el registro
+                setIsLogin(true);
             }
         } catch (error) {
             setError('Error: ' + error.message);
         }
     };
-
     return (
         <div>
             <h2>{isLogin ? 'Iniciar Sesión' : 'Registrarse'}</h2>

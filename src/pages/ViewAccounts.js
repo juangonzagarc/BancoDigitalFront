@@ -33,10 +33,10 @@ const ViewAccounts = () => {
                     {accounts.map((account) => (
                         <li key={account.id}>
                             <p>ID: {account.id}</p>
-                            <p>Cédula: {account.cedula}</p> {/* Cédula del cliente */}
-                            <p>Nombre: {account.nombre}</p> {/* Nombre del cliente */}
-                            <p>Saldo: {account.balance}</p> {/* Balance de la cuenta */}
-                            <p>Fecha de Creación: {account.fechaCreacion}</p> {/* Fecha de creación */}
+                            <p>Cédula: {account.cedula}</p>
+                            <p>Nombre: {account.nombre}</p>
+                            <p>Saldo: {account.balance}</p>
+                            <p>Fecha de Creación: {account.fechaCreacion}</p>
                         </li>
                     ))}
                 </ul>

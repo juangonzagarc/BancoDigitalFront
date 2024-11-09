@@ -2,15 +2,20 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8081/api';
 
+// Función para manejar errores de Axios de forma consistente
+const handleError = (error, defaultMessage) => {
+    const errorMsg = error.response?.data?.message || defaultMessage;
+    console.error(errorMsg);
+    throw new Error(errorMsg);
+};
+
 // Crear una cuenta de ahorros
 export const createAccount = async (data) => {
     try {
         const response = await axios.post(`${BASE_URL}/accounts/create`, data);
         return response.data;
     } catch (error) {
-        const errorMsg = error.response?.data?.message || 'Error creating account';
-        console.error('Error creating account:', errorMsg);
-        throw new Error(errorMsg);
+        handleError(error, 'Error creating account');
     }
 };
 
@@ -20,26 +25,34 @@ export const getAccounts = async () => {
         const response = await axios.get(`${BASE_URL}/accounts/all`);
         return response.data;
     } catch (error) {
-        const errorMsg = error.response?.data?.message || 'Error fetching accounts';
-        console.error('Error fetching accounts:', errorMsg);
-        throw new Error(errorMsg);
+        handleError(error, 'Error fetching accounts');
     }
 };
 
 // Obtener detalles de una cuenta específica
 export const getAccountDetails = async (accountId) => {
+    if (!accountId) {
+        const errorMsg = 'Account ID is required but was not provided';
+        console.error(errorMsg);
+        throw new Error(errorMsg);
+    }
+
     try {
         const response = await axios.get(`${BASE_URL}/accounts/${accountId}`);
         return response.data;
     } catch (error) {
-        const errorMsg = error.response?.data?.message || 'Error fetching account details';
-        console.error('Error fetching account details:', errorMsg);
-        throw new Error(errorMsg);
+        handleError(error, 'Error fetching account details');
     }
 };
 
-// Realizar depósito en una cuenta (renombrado de realizarDeposito a deposit)
+// Realizar depósito en una cuenta
 export const deposit = async (accountId, amount) => {
+    if (!accountId) {
+        const errorMsg = 'Account ID is required for deposit';
+        console.error(errorMsg);
+        throw new Error(errorMsg);
+    }
+
     try {
         const response = await axios.post(`${BASE_URL}/accounts/deposit`, {
             accountId,
@@ -47,9 +60,7 @@ export const deposit = async (accountId, amount) => {
         });
         return response.data;
     } catch (error) {
-        const errorMsg = error.response?.data?.message || 'Error making deposit';
-        console.error('Error making deposit:', errorMsg);
-        throw new Error(errorMsg);
+        handleError(error, 'Error making deposit');
     }
 };
 
@@ -59,9 +70,7 @@ export const getClientByDocumentId = async (cedula) => {
         const response = await axios.get(`${BASE_URL}/cliente/${cedula}`);
         return response.data;
     } catch (error) {
-        const errorMsg = error.response?.data?.message || 'Error fetching client';
-        console.error('Error fetching client:', errorMsg);
-        throw new Error(errorMsg);
+        handleError(error, 'Error fetching client');
     }
 };
 
@@ -71,9 +80,7 @@ export const register = async (data) => {
         const response = await axios.post(`${BASE_URL}/auth/register`, data);
         return response.data;
     } catch (error) {
-        const errorMsg = error.response?.data?.message || 'Error registrando usuario';
-        console.error('Error registrando usuario:', errorMsg);
-        throw new Error(errorMsg);
+        handleError(error, 'Error registering user');
     }
 };
 
@@ -83,18 +90,16 @@ export const login = async (cedula, password) => {
         const response = await axios.post(`${BASE_URL}/auth/login`, { cedula, password });
         return response.data;
     } catch (error) {
-        const errorMsg = error.response?.data?.message || 'Error en el inicio de sesión';
-        console.error('Error en el inicio de sesión:', errorMsg);
-        throw new Error(errorMsg);
+        handleError(error, 'Error during login');
     }
 };
 
-// Exportar todas las funciones, incluidas login y register
+// Exportar todas las funciones
 const api = {
     createAccount,
     deposit,
     getAccounts,
-    getAccountDetails,  // Añadido getAccountDetails
+    getAccountDetails,
     getClientByDocumentId,
     register,
     login

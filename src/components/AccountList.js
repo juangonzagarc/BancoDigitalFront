@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getAccounts } from './api';
+import AccountDetails from './AccountDetails';
 
 function AccountList() {
     const [accounts, setAccounts] = useState([]);
+    const [selectedAccountId, setSelectedAccountId] = useState(null);
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -18,6 +20,10 @@ function AccountList() {
         fetchAccounts();
     }, []);
 
+    const handleAccountClick = (accountId) => {
+        setSelectedAccountId(accountId);
+    };
+
     return (
         <div>
             <h2>Lista de Cuentas</h2>
@@ -30,9 +36,14 @@ function AccountList() {
                         <p>Nombre: {account.nombre}</p>
                         <p>Saldo: {account.balance}</p>
                         <p>Fecha de Creación: {account.fechaCreacion}</p>
+                        <button onClick={() => handleAccountClick(account.numeroCuenta)}>Ver Detalles</button>
                     </li>
                 ))}
             </ul>
+
+            {selectedAccountId && (
+                <AccountDetails accountId={selectedAccountId} />
+            )}
         </div>
     );
 }

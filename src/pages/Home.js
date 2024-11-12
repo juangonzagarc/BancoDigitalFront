@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import AccountForm from '../components/AccountForm';
 import DepositForm from '../components/DepositForm';
 import AccountList from '../components/AccountList';
-import { getAccounts, createAccount, deposit } from '../api';
+import { getAccounts, createAccount, deposit } from '../api/api';
 
 const Home = () => {
     const [accounts, setAccounts] = useState([]);

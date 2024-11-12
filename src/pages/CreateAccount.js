@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createAccount, getClientByDocumentId } from '../api';
+import { createAccount, getClientByDocumentId } from '../api/api';
 
 const CreateAccount = () => {
     const [name, setName] = useState('');

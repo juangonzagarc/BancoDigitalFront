@@ -1,7 +1,7 @@
 // AccountDetails.js
 import React, { useEffect, useContext, useState } from 'react';
 import { UserContext } from '../UserContext';
-import api from '../api';
+import api from '../api/api';
 
 function AccountDetails() {
     const { user } = useContext(UserContext);

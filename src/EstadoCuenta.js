@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAccountDetails } from './api';
+import { getAccountDetails } from './api/api';
 
 function EstadoCuenta() {
     const [accountDetails, setAccountDetails] = useState({});

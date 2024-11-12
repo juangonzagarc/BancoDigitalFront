@@ -7,11 +7,6 @@ function Dashboard() {
             <h1>Bienvenido al Banco Digital</h1>
             <div>
                 <button>
-                    <Link to="/estado-cuenta" style={{ textDecoration: 'none', color: 'inherit' }}>
-                        Ver Estado de la Cuenta
-                    </Link>
-                </button>
-                <button>
                     <Link to="/consulta-general" style={{ textDecoration: 'none', color: 'inherit' }}>
                         Consulta General de Cuentas
                     </Link>

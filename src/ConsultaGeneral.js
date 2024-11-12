@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getAccounts } from './api';
+import { getAccounts } from './api/api';
+import './ConsultaGeneral.css';
 
 function ConsultaGeneral() {
     const [accounts, setAccounts] = useState([]);
@@ -14,17 +15,18 @@ function ConsultaGeneral() {
     }, []);
 
     return (
-        <div>
-            <h2>Consulta General de Cuentas</h2>
-            <ul>
-                {accounts.map(account => (
-                    <li key={account.numeroCuenta}>
-                        Cuenta: {account.numeroCuenta}, Cliente: {account.nombre} {account.apellido}, Saldo: {account.saldo}, Fecha de Creación: {account.fechaCreacion}
+        <div className="consulta-container">
+            <h2 className="consulta-title">Consulta General de Cuentas</h2>
+            <ul className="account-list">
+                {accounts.map((account, index) => (
+                    <li key={index} className="account-item">
+                        Cuenta: {account.numeroCuenta}, Cliente: {account.nombre},
+                        Saldo: {account.saldo}, Fecha de Creación: {account.fechaCreacion}
                     </li>
                 ))}
             </ul>
         </div>
     );
-}
+};
 
 export default ConsultaGeneral;

@@ -29,38 +29,43 @@ export const getAccounts = async () => {
     }
 };
 
-// Obtener detalles de una cuenta específica
-export const getAccountDetails = async (accountId) => {
-    if (!accountId) {
-        const errorMsg = 'Account ID is required but was not provided';
-        console.error(errorMsg);
-        throw new Error(errorMsg);
-    }
-
-    try {
-        const response = await axios.get(`${BASE_URL}/accounts/${accountId}`);
-        return response.data;
-    } catch (error) {
-        handleError(error, 'Error fetching account details');
-    }
-};
-
 // Realizar depósito en una cuenta
 export const deposit = async (accountId, amount) => {
-    if (!accountId) {
-        const errorMsg = 'Account ID is required for deposit';
-        console.error(errorMsg);
-        throw new Error(errorMsg);
-    }
-
     try {
         const response = await axios.post(`${BASE_URL}/accounts/deposit`, {
-            accountId,
-            amount,
+            accountId: accountId,
+            amount: amount
         });
         return response.data;
     } catch (error) {
         handleError(error, 'Error making deposit');
+    }
+};
+
+
+export const getAccountById = async (numeroCuenta) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/accounts/${numeroCuenta}`, {
+            withCredentials: true // Agrega esto si usas cookies para autenticación
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching account details:", error);
+        throw error;
+    }
+};
+
+
+// Modificar el saldo de una cuenta (actualizar saldo)
+export const updateAccountBalance = async (accountNumber, newBalance) => {
+    try {
+        const response = await axios.put(`${BASE_URL}/accounts/update-balance`, {
+            numeroCuenta: accountNumber,
+            saldo: newBalance
+        });
+        return response.data;
+    } catch (error) {
+        handleError(error, 'Error updating account balance');
     }
 };
 
@@ -99,7 +104,8 @@ const api = {
     createAccount,
     deposit,
     getAccounts,
-    getAccountDetails,
+    getAccountById,
+    updateAccountBalance,
     getClientByDocumentId,
     register,
     login

@@ -20,7 +20,7 @@ function ConsultaGeneral() {
             <ul className="account-list">
                 {accounts.map((account, index) => (
                     <li key={index} className="account-item">
-                        Cuenta: {account.numeroCuenta}, Cliente: {account.nombre},
+                        Cuenta: {account.numeroCuenta}, Cliente: {account.nombre} {account.apellido},
                         Saldo: {account.saldo}, Fecha de Creación: {account.fechaCreacion}
                     </li>
                 ))}

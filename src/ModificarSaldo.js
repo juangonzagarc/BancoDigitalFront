@@ -1,80 +1,67 @@
-// ModificarSaldo.js
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getAccountById, updateAccountBalance } from './api/api'; // Asegúrate de que estas funciones estén bien importadas
+import React, { useState } from 'react';
+import { updateAccountBalance } from './api/api';
 
-const ModificarSaldo = () => {
-    const { numeroCuenta } = useParams(); // Obtener el ID de la cuenta desde la URL
-    const [account, setAccount] = useState(null);
-    const [amount, setAmount] = useState('');
-    const navigate = useNavigate();
+function ModificarSaldo() {
+    const [accountId, setAccountId] = useState("");  // Usamos un valor inicial vacío
+    const [newBalance, setNewBalance] = useState("");
 
-        useEffect(() => {
-            const fetchAccount = async () => {
-                try {
-                    const data = await getAccountById(numeroCuenta);
-                    if (data) {
-                        setAccount(data);
-                    } else {
-                        alert("No se encontró la cuenta con el número especificado.");
-                        navigate('/realizar-deposito');
-                    }
-                } catch (error) {
-                    alert("Error al cargar los datos de la cuenta. Por favor, inténtelo de nuevo.");
-                    console.error("Error al obtener la cuenta:", error);
-                    navigate('/realizar-deposito');
-                }
-            };
-            fetchAccount();
-        }, [numeroCuenta, navigate]);
+    // Manejador del botón para actualizar el saldo
+    const handleUpdateBalance = async () => {
+        console.log("Datos antes de enviar:");
+        console.log("accountId:", accountId);
+        console.log("newBalance:", newBalance);
 
-    const handleAmountChange = (e) => {
-        setAmount(e.target.value);
-    };
-
-    const handleDeposit = async () => {
-        try {
-            const newBalance = account.saldo + parseFloat(amount);
-            await updateAccountBalance(account.numeroCuenta, newBalance);
-            alert('Depósito realizado exitosamente');
-            navigate('/realizar-deposito');
-        } catch (error) {
-            alert("Error al realizar el depósito. Por favor, inténtelo de nuevo.");
-        }
-    };
-
-    const handleWithdraw = async () => {
-        const newBalance = account.saldo - parseFloat(amount);
-        if (newBalance < 0) {
-            alert('No se puede retirar más del saldo disponible');
+        // Verificar que ambos valores están definidos y no son vacíos
+        if (!accountId || !newBalance) {
+            console.error("accountId o newBalance no están definidos o están vacíos.");
+            alert("Por favor, asegúrate de ingresar el ID de la cuenta y el nuevo saldo.");
             return;
         }
+
         try {
-            await updateAccountBalance(account.numeroCuenta, newBalance);
-            alert('Retiro realizado exitosamente');
-            navigate('/realizar-deposito');
+            const parsedBalance = parseFloat(newBalance);
+            if (isNaN(parsedBalance) || parsedBalance < 0) {
+                console.error("newBalance no es un número válido o es negativo.");
+                alert("Por favor, ingresa un valor válido y positivo para el saldo.");
+                return;
+            }
+
+            // Llamada a la API para actualizar el saldo
+            await updateAccountBalance(accountId, parsedBalance);
+            console.log("Actualización de saldo completada");
+            alert("Saldo actualizado exitosamente.");
         } catch (error) {
-            alert("Error al realizar el retiro. Por favor, inténtelo de nuevo.");
+            console.error("Error en handleUpdateBalance:", error);
+            alert("Hubo un error al actualizar el saldo.");
         }
     };
 
-    if (!account) return <div>Cargando datos de la cuenta...</div>;
-
     return (
-        <div className="deposit-section">
-            <h2>Modificar Saldo - Cuenta {account.numeroCuenta}</h2>
-            <h2>Cliente: {account.nombre} {account.apellido}</h2>
-            <p>Saldo Actual: {account.saldo}</p>
+        <div>
+            <h2>Modificar Saldo</h2>
+
+            {/* Campo para ingresar el ID de la cuenta */}
+            <label>ID de la Cuenta:</label>
             <input
-                type="number"
-                value={amount}
-                onChange={handleAmountChange}
-                placeholder="Monto"
+                type="text"
+                value={accountId}
+                onChange={(e) => setAccountId(e.target.value)}
+                placeholder="Ingresa el ID de la cuenta"
             />
-            <button onClick={handleDeposit}>Depositar</button>
-            <button onClick={handleWithdraw}>Retirar</button>
+
+            {/* Campo para ingresar el nuevo saldo */}
+            <label>Nuevo Saldo:</label>
+            <input
+                type="text"
+                value={newBalance}
+                onChange={(e) => setNewBalance(e.target.value)}
+                placeholder="Ingresa el nuevo saldo"
+            />
+
+            {/* Botón para actualizar el saldo */}
+            <button onClick={handleUpdateBalance}>Actualizar Saldo</button>
         </div>
     );
-};
+}
 
 export default ModificarSaldo;

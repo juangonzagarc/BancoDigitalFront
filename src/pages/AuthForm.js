@@ -7,6 +7,7 @@ function AuthForm() {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [contraseña, setContraseña] = useState('');
+    const [saldo, setSaldo] = useState('');
     const [isLogin, setIsLogin] = useState(true);
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -15,20 +16,23 @@ function AuthForm() {
         e.preventDefault();
         setError('');
 
+        const formData = { cedula, nombre, apellido, contrasena: contraseña, saldo };
+
         try {
             if (isLogin) {
                 await api.login(cedula, contraseña);
-                alert('Login exitoso');
                 navigate('/dashboard');
             } else {
-                await api.register({ cedula, nombre, apellido, contraseña });
-                alert('Registro exitoso');
+                console.log('Datos enviados para registro:', formData); // Verifica que todos los campos están presentes
+                await api.register(formData);
                 setIsLogin(true);
             }
         } catch (error) {
             setError('Error: ' + error.message);
         }
     };
+
+
     return (
         <div>
             <h2>{isLogin ? 'Iniciar Sesión' : 'Registrarse'}</h2>
@@ -54,6 +58,13 @@ function AuthForm() {
                             placeholder="Apellido"
                             value={apellido}
                             onChange={(e) => setApellido(e.target.value)}
+                            required
+                        />
+                        <input
+                            type="number"
+                            placeholder="Saldo"
+                            value={saldo}
+                            onChange={(e) => setSaldo(e.target.value)}
                             required
                         />
                     </>

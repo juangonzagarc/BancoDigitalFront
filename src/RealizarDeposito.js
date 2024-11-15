@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAccounts } from './api/api';
 import { useNavigate } from 'react-router-dom';
-//import './styles/AccountListStyles.css'; // Descomenta si resuelves el error de CSS
+import "../src/styles/AccountListStyles.css"
 
 const RealizarDeposito = () => {
     const [accounts, setAccounts] = useState([]);
@@ -37,7 +37,7 @@ const RealizarDeposito = () => {
                             onClick={() => handleAccountSelect(account)}
                             className="account-item-button"
                         >
-                            Cuenta: {account.numeroCuenta}, Cliente: {account.nombre}, Saldo: {account.saldo}, Fecha de Creación: {account.fechaCreacion}
+                            Cuenta: {account.numeroCuenta}, Cliente: {account.nombre} {account.apellido}, Saldo: {account.saldo}, Fecha de Creación: {account.fechaCreacion}
                         </button>
                     ))
                 ) : (

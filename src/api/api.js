@@ -56,18 +56,22 @@ export const getAccountById = async (numeroCuenta) => {
 };
 
 
-// Modificar el saldo de una cuenta (actualizar saldo)
-export const updateAccountBalance = async (accountNumber, newBalance) => {
+export const updateAccountBalance = async (accountId, amount) => {
     try {
         const response = await axios.put(`${BASE_URL}/accounts/update-balance`, {
-            numeroCuenta: accountNumber,
-            saldo: newBalance
+            accountId: accountId,
+            amount: amount
         });
         return response.data;
     } catch (error) {
-        handleError(error, 'Error updating account balance');
+        handleError(error, 'Error al actualizar el saldo');
     }
 };
+
+
+
+
+
 
 // Obtener cliente por documento de identidad
 export const getClientByDocumentId = async (cedula) => {
@@ -80,14 +84,24 @@ export const getClientByDocumentId = async (cedula) => {
 };
 
 // Registro de usuarios
+// api.js
 export const register = async (data) => {
+    if (typeof window !== 'undefined') {
+        window.api = api;
+    }
+    console.log('Datos enviados para registro:', data);
     try {
         const response = await axios.post(`${BASE_URL}/auth/register`, data);
         return response.data;
     } catch (error) {
-        handleError(error, 'Error registering user');
+        console.error('Error registrando usuario:', error);
+        throw error;
     }
 };
+
+
+
+
 
 // Login de usuarios
 export const login = async (cedula, password) => {

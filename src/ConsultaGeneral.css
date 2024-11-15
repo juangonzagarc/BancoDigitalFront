@@ -1,36 +1,42 @@
-/* ConsultaGeneral.css */
-
+/* Estilos para el contenedor principal */
 .consulta-container {
-  background-color: #2c3e50;
-  color: #ecf0f1;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #2C3E50; /* Fondo oscuro */
+    color: #ECF0F1; /* Texto claro */
+    padding: 20px;
+    min-height: 100vh;
 }
 
+/* Título */
 .consulta-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ECF0F1;
 }
 
+/* Lista de cuentas */
 .account-list {
-  list-style: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    max-width: 600px;
 }
 
+/* Estilo de cada elemento de la lista */
 .account-item {
-  font-size: 18px;
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #34495e;
-  border-radius: 5px;
-  transition: transform 0.3s;
+    background-color: #EAF2F8; /* Fondo claro */
+    color: #2C3E50; /* Texto oscuro */
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    line-height: 1.5;
 }
 
 .account-item:hover {
-  transform: scale(1.02);
-  background-color: #3b5998;
+    background-color: #D4E6F1; /* Fondo ligeramente más oscuro en hover */
 }

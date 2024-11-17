@@ -10,7 +10,7 @@ const ViewAccounts = () => {
             setLoading(true);
             try {
                 const response = await api.getAccounts();
-                setAccounts(response); // Asegúrate de que la respuesta sea la correcta
+                setAccounts(response);
             } catch (error) {
                 console.error('Error fetching accounts:', error);
             } finally {

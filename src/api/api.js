@@ -2,14 +2,12 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8081/api';
 
-// Función para manejar errores de Axios de forma consistente
 const handleError = (error, defaultMessage) => {
     const errorMsg = error.response?.data?.message || defaultMessage;
     console.error(errorMsg);
     throw new Error(errorMsg);
 };
 
-// Crear una cuenta de ahorros
 export const createAccount = async (data) => {
     try {
         const response = await axios.post(`${BASE_URL}/accounts/create`, data);
@@ -19,7 +17,6 @@ export const createAccount = async (data) => {
     }
 };
 
-// Obtener todas las cuentas
 export const getAccounts = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/accounts/all`);
@@ -29,7 +26,6 @@ export const getAccounts = async () => {
     }
 };
 
-// Realizar depósito en una cuenta
 export const deposit = async (accountId, amount) => {
     try {
         const response = await axios.post(`${BASE_URL}/accounts/deposit`, {
@@ -46,7 +42,7 @@ export const deposit = async (accountId, amount) => {
 export const getAccountById = async (numeroCuenta) => {
     try {
         const response = await axios.get(`${BASE_URL}/accounts/${numeroCuenta}`, {
-            withCredentials: true // Agrega esto si usas cookies para autenticación
+            withCredentials: true
         });
         return response.data;
     } catch (error) {
@@ -54,7 +50,6 @@ export const getAccountById = async (numeroCuenta) => {
         throw error;
     }
 };
-
 
 export const updateAccountBalance = async (accountId, amount) => {
     try {
@@ -68,12 +63,6 @@ export const updateAccountBalance = async (accountId, amount) => {
     }
 };
 
-
-
-
-
-
-// Obtener cliente por documento de identidad
 export const getClientByDocumentId = async (cedula) => {
     try {
         const response = await axios.get(`${BASE_URL}/cliente/${cedula}`);
@@ -83,8 +72,6 @@ export const getClientByDocumentId = async (cedula) => {
     }
 };
 
-// Registro de usuarios
-// api.js
 export const register = async (data) => {
     if (typeof window !== 'undefined') {
         window.api = api;
@@ -99,11 +86,6 @@ export const register = async (data) => {
     }
 };
 
-
-
-
-
-// Login de usuarios
 export const login = async (cedula, password) => {
     try {
         const response = await axios.post(`${BASE_URL}/auth/login`, { cedula, password });
@@ -113,7 +95,6 @@ export const login = async (cedula, password) => {
     }
 };
 
-// Exportar todas las funciones
 const api = {
     createAccount,
     deposit,

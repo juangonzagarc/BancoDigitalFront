@@ -1,4 +1,3 @@
-// RealizarDeposito.js
 import React, { useState, useEffect } from 'react';
 import { getAccounts } from './api/api';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +11,7 @@ const RealizarDeposito = () => {
         const fetchAccounts = async () => {
             try {
                 const data = await getAccounts();
-                console.log("Datos recibidos de getAccounts:", data); // Verificar datos recibidos
+                console.log("Datos recibidos de getAccounts:", data);
                 setAccounts(data);
             } catch (error) {
                 console.error("Error al obtener las cuentas:", error);
@@ -22,7 +21,7 @@ const RealizarDeposito = () => {
     }, []);
 
     const handleAccountSelect = (account) => {
-        console.log("Cuenta seleccionada:", account); // Verificar cuenta seleccionada
+        console.log("Cuenta seleccionada:", account);
         navigate(`/modificar-saldo/${account.numeroCuenta}`);
     };
 

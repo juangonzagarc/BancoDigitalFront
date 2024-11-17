@@ -23,7 +23,7 @@ function AuthForm() {
                 await api.login(cedula, contraseña);
                 navigate('/dashboard');
             } else {
-                console.log('Datos enviados para registro:', formData); // Verifica que todos los campos están presentes
+                console.log('Datos enviados para registro:', formData);
                 await api.register(formData);
                 setIsLogin(true);
             }
@@ -31,7 +31,6 @@ function AuthForm() {
             setError('Error: ' + error.message);
         }
     };
-
 
     return (
         <div>

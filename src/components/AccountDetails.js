@@ -1,4 +1,3 @@
-// AccountDetails.js
 import React, { useEffect, useContext, useState } from 'react';
 import { UserContext } from '../UserContext';
 import api from '../api/api';
@@ -38,7 +37,6 @@ function AccountDetails() {
             <p>Account ID: {accountData.id}</p>
             <p>Balance: {accountData.balance}</p>
             <p>Creation Date: {accountData.creationDate}</p>
-            {/* Otros detalles de la cuenta */}
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8081/api';
+const BASE_URL = 'https://bancodigitalback.onrender.com/api';
 
 const handleError = (error, defaultMessage) => {
     const errorMsg = error.response?.data?.message || defaultMessage;
